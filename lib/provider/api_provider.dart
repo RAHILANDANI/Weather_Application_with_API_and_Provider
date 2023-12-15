@@ -6,16 +6,17 @@ import 'package:wheater/model/temperature_model.dart';
 
 class ApiProvider extends ChangeNotifier {
   int index = 0;
+  String city = "rajkot";
   Map<String, dynamic> location = {};
   Map<String, dynamic> current = {};
   List forecastday = [];
   List forecastdayhour = [];
-  List forecastday_model = [];
+  List<TemphourModel> forecastday_model = [];
 
   Future<void> fetchdataapi() async {
     String apikey = "6055c00ec0104cbf81b105446231212";
     String api =
-        "http://api.weatherapi.com/v1/forecast.json?key=6055c00ec0104cbf81b105446231212&q=rajkot&days=10&aqi=no&alerts=no";
+        "http://api.weatherapi.com/v1/forecast.json?key=$apikey&q=$city&days=10&aqi=no&alerts=no";
 
     http.Response response = await http.get(Uri.parse(api));
 
@@ -40,6 +41,11 @@ class ApiProvider extends ChangeNotifier {
           .toList();
       print(forecastday_model);
     }
+    notifyListeners();
+  }
+
+  void searchdata(String data) {
+    data = city;
     notifyListeners();
   }
 }

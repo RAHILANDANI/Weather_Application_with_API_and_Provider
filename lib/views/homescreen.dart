@@ -24,6 +24,20 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "search location",
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      pov.fetchdataapi();
+                    },
+                    child: Icon(Icons.search),
+                  ),
+                ),
+                onChanged: (val) {
+                  pov.searchdata(val);
+                },
+              ),
               Center(
                 child: Text(
                   "My Location",
