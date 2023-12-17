@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wheater/provider/api_provider.dart';
+import 'package:wheater/provider/theme_provider.dart';
 import 'package:wheater/views/homescreen.dart';
 import 'package:wheater/views/splashscreen.dart';
 
@@ -12,9 +12,18 @@ void main() {
       providers: [
         Provider(
           create: (context) => ApiProvider(),
+        ),
+        Provider(
+          create: (context) => ThemeProvider(),
         )
       ],
       builder: (context, child) => MaterialApp(
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode:
+            (Provider.of<ThemeProvider>(context).themeModel.isdark == false)
+                ? ThemeMode.light
+                : ThemeMode.dark,
         initialRoute: '/',
         routes: {
           '/': (context) => splash(),
