@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../provider/api_provider.dart';
 
 class splash extends StatefulWidget {
@@ -12,8 +13,11 @@ class splash extends StatefulWidget {
 }
 
 class _splashState extends State<splash> {
+  bool? res;
+
   @override
   void initState() {
+    getstart();
     // TODO: implement initState
     super.initState();
     getdata(context).then(
@@ -21,11 +25,18 @@ class _splashState extends State<splash> {
         Timer(
           Duration(seconds: 3),
           () {
-            Navigator.of(context).pushReplacementNamed('homepage');
+            (res == true)
+                ? Navigator.of(context).pushReplacementNamed('homepage')
+                : Navigator.of(context).pushReplacementNamed('getstart');
           },
         );
       },
     );
+  }
+
+  getstart() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    res = pref.getBool('getstart');
   }
 
   Future<void> getdata(BuildContext context) async {
